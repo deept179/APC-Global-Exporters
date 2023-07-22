@@ -3,7 +3,7 @@ import AdminLayout from '../page';
 
 const ContactUs = () => {
   return (
-    <AdminLayout><div>this is contact us page</div></AdminLayout>
+    <div>this is contact us page</div>
   )
 }
 

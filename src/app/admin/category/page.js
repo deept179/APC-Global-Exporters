@@ -3,7 +3,7 @@ import AdminLayout from '../page';
 
 const Category = () => {
     return (
-        <AdminLayout><div>This is Category page</div></AdminLayout>
+        <div>This is Category page</div>
     )
 }
 

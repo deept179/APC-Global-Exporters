@@ -13,7 +13,8 @@ import Link from 'next/link';
 import Category from '@/app/admin/category/page';
 import Product from '@/app/admin/product/page';
 import ContactUs from '@/app/admin/contact-us/page';
-
+import Image from 'next/image';
+import Logo from "../../assets/logo/logo.png"
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -25,16 +26,21 @@ const AdminLayout = () => {
       <Sider collapsible>
         <div className="logo" />
         <Menu theme="dark" mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => selected !== "1" && setSelectedKey("1")}>
-            <a href="/admin/category">Category</a>
+          <Menu.Item>
+            <Image src={Logo} alt="Company logo" className='' />
           </Menu.Item>
+
+          <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => selectedKey !== "1" && setSelectedKey("1")}>
+            Category
+          </Menu.Item>
+
           <SubMenu key="sub1" icon={<UserOutlined />} title="Product">
-            <Menu.Item key="3" onClick={() => selected !== "3" && setSelectedKey("3")}>
-              <a href="/admin/product" >Product</a>
+            <Menu.Item key="3" onClick={() => selectedKey !== "3" && setSelectedKey("3")}>
+              Product
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key="9" icon={<FileOutlined />} onClick={() => selected !== "9" && setSelectedKey("9")}>
-            <Link href="/admin/contact-us">Contact Us</Link>
+          <Menu.Item key="9" icon={<FileOutlined />} onClick={() => selectedKey !== "9" && setSelectedKey("9")}>
+            Contact Us
           </Menu.Item>
         </Menu>
       </Sider>
