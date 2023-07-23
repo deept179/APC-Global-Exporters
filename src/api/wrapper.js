@@ -1,6 +1,4 @@
-import axios from "axios";
 import Cookies from "js-cookie";
-import { lazy } from "react";
 
 // Create a user token
 export const getUserToken = () => {
@@ -19,12 +17,36 @@ export const wrapperAPI = async ({ method, path, data = undefined, params = {}, 
   }
   const url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`
   try {
-    return fetch(url, {
-      method: method,
-      headers: headers,
-      body: JSON.stringify(data),
-    }).then((data) => data.json());
+    // return await fetch(url, {
+    //   method: method,
+    //   headers: headers,
+    //   body: JSON.stringify(data),
+    // }).then((data) => data.json())
+
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(method, url, true);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status <= 209) {
+          const responseData = JSON.parse(xhr.responseText);
+          resolve(responseData);
+        } else {
+          resolve(JSON.parse(xhr.responseText));
+        }
+      };
+      xhr.onerror = function () {
+        console.error('Network error occurred');
+      };
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      // xhr.send(JSON.stringify(data));
+      if (data) {
+        xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send();
+      }
+    });
   } catch (error) {
-    throw error;
+    console.error('Error:', error);
   }
+
 };
