@@ -17,12 +17,6 @@ export const wrapperAPI = async ({ method, path, data = undefined, params = {}, 
   }
   const url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`
   try {
-    // return await fetch(url, {
-    //   method: method,
-    //   headers: headers,
-    //   body: JSON.stringify(data),
-    // }).then((data) => data.json())
-
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url, true);
@@ -38,7 +32,6 @@ export const wrapperAPI = async ({ method, path, data = undefined, params = {}, 
         console.error('Network error occurred');
       };
       xhr.setRequestHeader('Content-Type', 'application/json');
-      // xhr.send(JSON.stringify(data));
       if (data) {
         xhr.send(JSON.stringify(data));
       } else {

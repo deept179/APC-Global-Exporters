@@ -10,6 +10,15 @@ export const loginAPI = async (data) => {
   return login;
 };
 
+export const getSiteList = async () => {
+  const siteData = await wrapperAPI({
+    method: "POST",
+    path: `managesite/list`,
+    isTokenRequired: true,
+  });
+  return siteData;
+};
+
 // export const logOutAPI = async (data) => {
 //   try {
 //     const logout = await wrapperAPI({

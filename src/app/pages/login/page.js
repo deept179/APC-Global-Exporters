@@ -1,8 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
-import Link from 'next/link';
-import { loginAPI } from '@/api/login';
+import { Button, Form, Input, Row } from 'antd';
+import { getSiteList, loginAPI } from '@/api/adminService';
 import swal from "sweetalert";
 import Cookies from "js-cookie";
 
@@ -15,15 +14,17 @@ const Login = () => {
   const onFinish = async (event) => {
     event.preventDefault();
     const LoginData = await loginAPI(loginData);
-    console.log("LoginData", LoginData);
     if (LoginData?.success) {
+      // const siteList = await getSiteList();
+      console.log("siteList", siteList);
       if ("token" in LoginData?.data) {
         swal("Success", LoginData.message, "success", {
           buttons: false,
           timer: 2000,
         }).then(() => {
+
           localStorage.setItem("accessToken", LoginData?.data.token);
-          window.location.href = '/admin';
+          // window.location.href = '/admin';
         });
         console.log("Login successfully!");
         Cookies.set("user", JSON.stringify(LoginData?.token), { expires: 7 });
