@@ -21,7 +21,7 @@ export const wrapperAPI = async ({
     headers = { Authorization: `Bearer ${token}` };
   }
   const request = {
-    url: `${process.env.REACT_APP_API_URL}/${path}`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
     method,
     headers,
     params,
@@ -30,20 +30,19 @@ export const wrapperAPI = async ({
 
   try {
     const res = await axios(request);
-
-    return res.data;
+    return res;
   } catch (error) {
-    if (error.response.data.message === "Unauthenticated.") {
-      Cookies.remove("token");
-      window.location.href = "/login";
-    }
-    let isLoggin = Cookies.get("token")
-    if (error.response.data.meta.status == "fail" && isLoggin) {
-      setTimeout(() => {
-        Cookies.remove("token");
-        window.location.href = "/login";
-      }, 3000);
-    }
-    throw error.response.data;
+    // if (error.response.data.message === "Unauthenticated.") {
+    //   Cookies.remove("token");
+    //   window.location.href = "/login";
+    // }
+    // let isLoggin = Cookies.get("token")
+    // if (error.response.data.meta.status == "fail" && isLoggin) {
+    //   setTimeout(() => {
+    //     Cookies.remove("token");
+    //     window.location.href = "/login";
+    //   }, 3000);
+    // }
+    throw error;
   }
 };
