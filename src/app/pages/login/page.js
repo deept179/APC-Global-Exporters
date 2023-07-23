@@ -11,19 +11,15 @@ const Login = () => {
   })
 
   const onFinish = () => {
-    console.log('Success:', loginData);
-    // const sendData = JSON.stringify(loginData)
     LoginAPICall(loginData);
   };
 
   const LoginAPICall = async (data) => {
-    try {
-      console.log("daataaaaaaaa: ",data)
-      const LoginData = await loginAPI(data);
-      console.log("LodinData: ", loginData)
-  
-    } catch (error) {
-      console.log(error)
+    const LoginData = await loginAPI(data);
+    if (LoginData.success) {
+      console.log("Login successfully!");
+    } else {
+      console.log(LoginData.message);
     }
   }
 
@@ -55,7 +51,7 @@ const Login = () => {
           className='ml-5'
         >
           {/* <Input onChange={(e) => setLoginData((pre) => pre.email == e.target.value)}/> */}
-          <Input onChange={(e) => setLoginData((pre) => ({...pre, email: e.target.value}))}/>
+          <Input onChange={(e) => setLoginData((pre) => ({ ...pre, email: e.target.value }))} />
         </Form.Item>
 
 
@@ -69,7 +65,7 @@ const Login = () => {
             },
           ]}
         >
-          <Input.Password onChange={(e) => setLoginData((pre) => ({...pre, password: e.target.value}))}/>
+          <Input.Password onChange={(e) => setLoginData((pre) => ({ ...pre, password: e.target.value }))} />
         </Form.Item>
 
 

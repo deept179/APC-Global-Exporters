@@ -8,41 +8,23 @@ export const getUserToken = () => {
   return token;
 };
 
-export const wrapperAPI = async ({
-  method,
-  path,
-  data = undefined,
-  params = {},
-  isTokenRequired = true,
-}) => {
+export const wrapperAPI = async ({ method, path, data = undefined, params = {}, isTokenRequired = true, }) => {
   const token = getUserToken();
   let headers = {};
   if (isTokenRequired) {
-    headers = { Authorization: `Bearer ${token}` };
+    headers = {
+      // Authorization: `Bearer ${token}`,
+      'Content-Type': "application/json",
+    };
   }
-  const request = {
-    url: `${process.env.NEXT_PUBLIC_API_URL}/${path}`,
-    method,
-    headers,
-    params,
-    data,
-  };
-
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/${path}`
   try {
-    const res = await axios(request);
-    return res;
+    return fetch(url, {
+      method: method,
+      headers: headers,
+      body: JSON.stringify(data),
+    }).then((data) => data.json());
   } catch (error) {
-    // if (error.response.data.message === "Unauthenticated.") {
-    //   Cookies.remove("token");
-    //   window.location.href = "/login";
-    // }
-    // let isLoggin = Cookies.get("token")
-    // if (error.response.data.meta.status == "fail" && isLoggin) {
-    //   setTimeout(() => {
-    //     Cookies.remove("token");
-    //     window.location.href = "/login";
-    //   }, 3000);
-    // }
     throw error;
   }
 };

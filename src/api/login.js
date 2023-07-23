@@ -1,17 +1,13 @@
 import { wrapperAPI } from "./wrapper";
 
 export const loginAPI = async (data) => {
-  try {
-    const login = await wrapperAPI({
-      method: "POST",
-      path: `user/signin`,
-      data: data,
-      isTokenRequired: false,
-    });
-    return login;
-  } catch (error) {
-    throw error;
-  }
+  const login = await wrapperAPI({
+    method: "POST",
+    path: `user/signin`,
+    data: data,
+    isTokenRequired: true,
+  });
+  return login;
 };
 
 // export const logOutAPI = async (data) => {
