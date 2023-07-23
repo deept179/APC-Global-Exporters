@@ -12,12 +12,15 @@ const Login = () => {
 
   const onFinish = () => {
     console.log('Success:', loginData);
+    // const sendData = JSON.stringify(loginData)
     LoginAPICall(loginData);
   };
 
   const LoginAPICall = async (data) => {
     try {
+      console.log("daataaaaaaaa: ",data)
       const LoginData = await loginAPI(data);
+      console.log("LodinData: ", loginData)
   
     } catch (error) {
       console.log(error)
