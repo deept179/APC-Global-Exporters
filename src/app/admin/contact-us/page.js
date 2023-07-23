@@ -1,37 +1,24 @@
-// import React from 'react'
-// import AdminLayout from '../page';
-
-// const ContactUs = () => {
-//   return (
-//     <div>this is contact us page</div>
-//   )
-// }
-
-// export default ContactUs;
 "use client";
 import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox, Space } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 const ContactUs = () => {
-  const [formFields, setFormFields] = useState([]);
+  const [formFields, setFormFields] = useState([
+    { name: 'email', label: 'Email', required: true },
+    { name: 'phone', label: 'Phone Number', required: true },
+    { name: 'address', label: 'Address', required: false },
+  ]);
 
   const onFinish = (values) => {
     console.log('Submitted values:', values);
   };
 
-  const addFormField = () => {
-    setFormFields((prevFields) => [
-      ...prevFields,
-      {
-        name: `field-${prevFields.length}`,
-        label: '',
-        required: true,
-      },
-    ]);
-  };
-
-  const removeFormField = (fieldIndex) => {
-    setFormFields((prevFields) => prevFields.filter((field, index) => index !== fieldIndex));
+  const handleFieldChange = (index, fieldData) => {
+    setFormFields((prevFields) => {
+      const newFormFields = [...prevFields];
+      newFormFields[index] = { ...newFormFields[index], ...fieldData };
+      return newFormFields;
+    });
   };
 
   return (
@@ -43,10 +30,10 @@ const ContactUs = () => {
         autoComplete="off"
       >
         {formFields.map((field, index) => (
-          <Space key={field.name} className="flex w-full">
+          <div key={field.name} className='flex items-center'>
             <Form.Item
               label="Field Label"
-              name={[field.name, 'label']}
+              name={`label-${field.name}`}
               initialValue={field.label}
               rules={[
                 {
@@ -56,28 +43,26 @@ const ContactUs = () => {
               ]}
               className='flex-1'
             >
-              <Input placeholder="Field Label" />
+              <Input
+                placeholder="Field Label"
+                onChange={(e) => handleFieldChange(index, { label: e.target.value })}
+              />
             </Form.Item>
 
             <Form.Item
               label="Required"
-              name={[field.name, 'required']}
+              name={`required-${field.name}`}
               initialValue={field.required}
               valuePropName="checked"
               className='flex-none'
             >
-              <Checkbox />
+              <input
+                type="checkbox"
+                onChange={(e) => handleFieldChange(index, { required: e.target.checked })}
+              />
             </Form.Item>
-
-            {formFields.length > 1 && (
-              <Button className="flex-none" onClick={() => removeFormField(index)}>Remove</Button>
-            )}
-          </Space>
+          </div>
         ))}
-
-        <Form.Item className='flex justify-center'>
-          <Button type="dashed" onClick={addFormField}>Add Field</Button>
-        </Form.Item>
 
         <Form.Item className='flex justify-center'>
           <Button type="primary" htmlType="submit">Submit</Button>

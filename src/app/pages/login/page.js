@@ -19,7 +19,7 @@ const Login = () => {
     if (LoginData.success) {
       console.log("Login successfully!");
     } else {
-      console.log(LoginData.message);
+        console.log(LoginData.message);
     }
   }
 
